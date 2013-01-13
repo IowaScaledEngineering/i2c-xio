@@ -1,0 +1,4 @@
+schematics mrb-xio.sch
+output-name ../pcb/mrb-xio
+skip-m4
+elements-dir ../../../footprints
