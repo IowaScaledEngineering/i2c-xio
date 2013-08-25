@@ -6,7 +6,7 @@ GND
 T 67000 40900 9 10 1 0 0 0 1
 Generic I/O Powered Extender
 T 66800 40600 9 10 1 0 0 0 1
-mrb-xio.sch
+i2c-xio.sch
 T 67000 40300 9 10 1 0 0 0 1
 1
 T 68500 40300 9 10 1 0 0 0 1
