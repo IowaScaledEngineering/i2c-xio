@@ -80,13 +80,14 @@ class XIO
 	public:
 		XIO();
 		void begin(boolean a0, boolean a1, boolean a2, char dioReset, char dioOutputEnable);
-		void pinMode(byte pin, byte mode);
-		void pinModeCached(byte pin, byte mode);
-		boolean digitalRead(byte pin);
-		boolean digitalReadCached(byte pin);
-		void digitalWrite(byte pin, boolean value);
-		void digitalWriteCached(byte pin, boolean value);		
-		void refresh(boolean includePinModes=false);
+		void xioPinMode(byte pin, byte mode);
+		void xioPinModeCached(byte pin, byte mode);
+		boolean xioDigitalRead(byte pin);
+		boolean xioDigitalReadCached(byte pin);
+		void xioDigitalWrite(byte pin, boolean value);
+		void xioDigitalWriteCached(byte pin, boolean value);		
+		void refreshIO();
+		void refreshPinModes();		
 
 	private:
 		uint8_t addr;

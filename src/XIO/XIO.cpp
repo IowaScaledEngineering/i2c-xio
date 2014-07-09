@@ -19,7 +19,6 @@ LICENSE:
     
     For more information about the Iowa Scaled Engineering I2C-XIO, see:
     http://www.iascaled.com/store/I2C-XIO
-    
 
 *************************************************************************/
 
@@ -45,9 +44,11 @@ void XIO::begin(boolean a0, boolean a1, boolean a2, char dioResetPin, char dioOu
 	uint8_t addrBitmap = (a0?0x01:0x00) | (a1?0x02:0x00) | (a2?0x04:0x00);
 	this->addr = 0x20 | (addrBitmap);
 	
-	this->dioReset = dioResetPin;
-	this->dioOutputEnable = dioOutputEnablePin;
+	this->dioReset = 4;//dioResetPin;
+	this->dioOutputEnable = 3;//dioOutputEnablePin;
 	
+  
+  		
 	// If there's a DIO pin assigned to reset, use it to do a hardware reset on initialization
 	if (-1 != this->dioOutputEnable)
 		pinMode(this->dioOutputEnable, OUTPUT);
@@ -70,7 +71,7 @@ void XIO::begin(boolean a0, boolean a1, boolean a2, char dioResetPin, char dioOu
 	memset(this->pinOutputStates, 0x00, sizeof(this->pinInputStates));
 }
 
-void XIO::pinModeCached(byte pin, byte mode)
+void XIO::xioPinModeCached(byte pin, byte mode)
 {
 	uint8_t bit = pin & 0x0F;
 	uint8_t bank = (pin>>4) & 0x0F;
@@ -93,7 +94,7 @@ void XIO::pinModeCached(byte pin, byte mode)
 	}
 }
 
-void XIO::pinMode(byte pin, byte mode)
+void XIO::xioPinMode(byte pin, byte mode)
 {
 	uint8_t bit = pin & 0x0F;
 	uint8_t bank = (pin>>4) & 0x0F;
@@ -101,12 +102,12 @@ void XIO::pinMode(byte pin, byte mode)
 	if ((bit > 7) || (bank > 4))
 		return;
 
-	pinModeCached(pin, mode);
+	xioPinModeCached(pin, mode);
 	
 	sendOutputConfiguration(bank);
 }
 
-void XIO::digitalWriteCached(byte pin, boolean value)
+void XIO::xioDigitalWriteCached(byte pin, boolean value)
 {
 	uint8_t bit = pin & 0x0F;
 	uint8_t bank = (pin>>4) & 0x0F;
@@ -121,7 +122,7 @@ void XIO::digitalWriteCached(byte pin, boolean value)
 
 }
 
-void XIO::digitalWrite(byte pin, boolean value)
+void XIO::xioDigitalWrite(byte pin, boolean value)
 {
 	uint8_t bit = pin & 0x0F;
 	uint8_t bank = (pin>>4) & 0x0F;
@@ -129,12 +130,12 @@ void XIO::digitalWrite(byte pin, boolean value)
 	if ((bit > 7) || (bank > 4))
 		return;
 
-	digitalWriteCached(pin, value);
+	xioDigitalWriteCached(pin, value);
 	
 	sendOutput(bank);
 }
 
-boolean XIO::digitalReadCached(byte pin)
+boolean XIO::xioDigitalReadCached(byte pin)
 {
 	uint8_t bit = pin & 0x0F;
 	uint8_t bank = (pin>>4) & 0x0F;
@@ -145,7 +146,7 @@ boolean XIO::digitalReadCached(byte pin)
 	return( (this->pinInputStates[bank] & _BV(bit)) ? HIGH:LOW );
 }
 
-boolean XIO::digitalRead(byte pin)
+boolean XIO::xioDigitalRead(byte pin)
 {
 	uint8_t bit = pin & 0x0F;
 	uint8_t bank = (pin>>4) & 0x0F;
@@ -155,7 +156,7 @@ boolean XIO::digitalRead(byte pin)
 
 	this->pinInputStates[bank] = getInput(bank);
 
-	return digitalReadCached(pin);
+	return xioDigitalReadCached(pin);
 }
 
 
@@ -225,10 +226,13 @@ byte XIO::getInput(byte bank)
 
 }
 
-void XIO::refresh(boolean includePinModes)
+void XIO::refreshPinModes()
 {
-	if (includePinModes)
-		sendOutputConfiguration(0xFF);
+	sendOutputConfiguration(0xFF);
+}
+
+void XIO::refreshIO()
+{
 	sendOutput(0xFF);
 	getInput(0xFF);
 }
