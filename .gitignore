@@ -1,0 +1,10 @@
+*~
+*.o
+*.elf
+*.hex
+*.lst
+*-
+*.bak
+*.cmd
+*.net
+*.new.pcb
