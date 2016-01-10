@@ -44,10 +44,8 @@ void XIO::begin(boolean a0, boolean a1, boolean a2, char dioResetPin, char dioOu
 	uint8_t addrBitmap = (a0?0x01:0x00) | (a1?0x02:0x00) | (a2?0x04:0x00);
 	this->addr = 0x20 | (addrBitmap);
 	
-	this->dioReset = 4;//dioResetPin;
-	this->dioOutputEnable = 3;//dioOutputEnablePin;
-	
-  
+	this->dioReset = dioResetPin;
+	this->dioOutputEnable = dioOutputEnablePin;
   		
 	// If there's a DIO pin assigned to reset, use it to do a hardware reset on initialization
 	if (-1 != this->dioOutputEnable)
