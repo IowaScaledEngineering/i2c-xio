@@ -1,0 +1,17 @@
+G04 start of page 4 for group 2 idx 2 *
+G04 Title: (unknown), outline *
+G04 Creator: pcb 20140316 *
+G04 CreationDate: Mon 29 Jan 2018 01:09:38 AM GMT UTC *
+G04 For: railfan *
+G04 Format: Gerber/RS-274X *
+G04 PCB-Dimensions (mil): 5500.00 1700.00 *
+G04 PCB-Coordinate-Origin: lower left *
+%MOIN*%
+%FSLAX25Y25*%
+%LNOUTLINE*%
+%ADD51C,0.0100*%
+G54D51*X0Y170000D02*X550000D01*
+Y0D01*
+X0D01*
+Y170000D01*
+M02*
